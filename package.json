@@ -1,13 +1,11 @@
 {
   "name": "styled-shapes",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "html shapes implemented with styled-system props",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "browser": "dist/index.js",
-  "files": [
-    "dist/index.js"
-  ],
+  "files": ["dist/"],
   "scripts": {
     "test": "npm run test",
     "build": "rollup --config",

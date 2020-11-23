@@ -39,7 +39,6 @@ type ContentSize = {
     marginTop?: string;
     marginLeft?: string;
 };
-export type NamedShapeProps = Omit<ShapeProps, 'path'>;
 export const Shape: React.FC<ShapeProps> = ({
     path = 'M 0,0,0,1,1,1,1,0 Z',
     children,
