@@ -43,7 +43,7 @@ export const MoreExamples = () => {
                 path={predefinedShapes.star}
                 background="blue"
                 border="3px solid yellow"
-                boxShadow="0 0 4px 2px blue,0 0 4px 6px yellow,0 0 4px 10px blue"
+                boxShadow="0 0 4px 2px blue,0 0 4px 6px yellow,0 0 4px 10px blue, 0 0 4px 14px yellow"
                 margin=".5em"
             />
             <Shape
