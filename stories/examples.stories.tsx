@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/core';
+import Flex from '@chakra-ui/core/dist/Flex';
 import * as React from 'react';
 import * as predefinedShapes from '../src/predefined-shapes';
 import { Shape } from '../src/shape';

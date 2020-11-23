@@ -1,7 +1,6 @@
-import { Flex, FlexProps } from '@chakra-ui/core';
+import Flex, { FlexProps } from '@chakra-ui/core/dist/Flex';
 import md5 from 'md5';
 import React from 'react';
-import { display } from 'styled-system';
 import svgpath from 'svgpath';
 import { SVGBorder } from './utils/border';
 import { WithShadowFilters } from './utils/shadow';
@@ -23,6 +22,7 @@ export type ShapeProps = FlexProps &
         borderTop?: string;
         borderBottom?: string;
         boxShadow?: string;
+        key?: string | number;
         style?: {
             [key: string]: unknown;
         };
@@ -180,11 +180,10 @@ export const Shape: React.FC<ShapeProps> = ({
         ...m,
     };
     const wrapperProps = {
-        position: 'relative' as 'relative',
         background: 'transparent',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'absolute',
+        position: 'absolute' as 'absolute',
         top: '50%',
         left: '50%',
         transform: `translateX(-50%) translateY(-50%)`,
@@ -212,7 +211,7 @@ export const Shape: React.FC<ShapeProps> = ({
     const contentProps = {
         ...p,
         fontSize: '.5em',
-        boxSizing: 'content-box',
+        boxSizing: 'content-box' as 'content-box',
         justifyContent: 'center',
         alignItems: 'center',
         display,

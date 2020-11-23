@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/core';
+import Box from '@chakra-ui/core/dist/Box';
 import React, { ReactNode } from 'react';
 import svgpath from 'svgpath';
 import { splitSpaces } from './split';

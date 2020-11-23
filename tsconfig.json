@@ -17,9 +17,12 @@
         "jsx": "react",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "outDir": "dist",
+        "sourceRoot": "./src/",
+        "rootDir": "./src/"
     },
-    "include": ["src", "stories"],
+    "include": ["src"],
     "exclude": ["node_modules"],
     "ts-node": {
         "compilerOptions": {

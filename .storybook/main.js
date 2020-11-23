@@ -7,5 +7,10 @@ module.exports = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
         shouldExtractLiteralValuesFromEnum: true,
+        propFilter: (prop) => true,
+        compilerOptions: {
+            allowSyntheticDefaultImports: true,
+            esModuleInterop: true,
+        },
     },
 };

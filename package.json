@@ -4,10 +4,13 @@
   "description": "html shapes implemented with styled-system props",
   "main": "dist/index.js",
   "browser": "dist/index.js",
-  "files": ["dist/index.js"],
+  "files": [
+    "dist/index.js"
+  ],
   "scripts": {
     "test": "npm run test",
     "build": "rollup --config",
+    "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -32,25 +35,28 @@
     "url": "https://github.com/patrickdbakke/styled-shapes/issues"
   },
   "homepage": "https://github.com/patrickdbakke/styled-shapes#readme",
-  "resolutions": {
-    "**/react": "17.0.1",
-    "**/react-dom": "17.0.1"
-  },
   "dependencies": {
+    "@chakra-ui/core": "^0.8.0",
+    "md5": "^2.3.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "styled-system": "^5.1.5",
+    "svgpath": "^2.3.0"
+  },
+  "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@babel/runtime": "^7.12.1",
-    "@chakra-ui/core": "^0.8.0",
     "@jest/types": "^26.6.1",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
-    "@storybook/addon-a11y": "^6.1.0",
-    "@storybook/addon-knobs": "^6.1.0",
+    "@rollup/plugin-typescript": "^6.1.0",
     "@storybook/cli": "^6.1.0",
+    "@storybook/react": "^6.1.2",
     "@types/jest": "^26.0.15",
     "@types/md5": "^2.2.1",
     "@types/node": "^14.14.2",
@@ -72,21 +78,10 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^3.9.2",
     "jest": "^26.6.1",
-    "md5": "^2.3.0",
     "prettier": "^2.1.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "rollup": "^2.33.3",
-    "styled-system": "^5.1.5",
-    "svgpath": "^2.3.0",
     "ts-jest": "^26.4.2",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.5"
-  },
-  "devDependencies": {
-    "@storybook/addon-actions": "^6.1.2",
-    "@storybook/addon-essentials": "^6.1.2",
-    "@storybook/addon-links": "^6.1.2",
-    "@storybook/react": "^6.1.2"
   }
 }

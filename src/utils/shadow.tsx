@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/core';
+import Box from '@chakra-ui/core/dist/Box';
 import md5 from 'md5';
 import React from 'react';
 import { OncePerPage } from './once-per-page';
