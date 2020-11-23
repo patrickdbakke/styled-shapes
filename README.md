@@ -7,6 +7,8 @@
 
 ![demo](./demo.png)
 
+Checkout [Storybook for some examples / demos](https://patrickdbakke.github.io/styled-shapes/?path=/story/more-examples--more-examples). 
+
 # Usage
 
 `npm i styled-shapes`

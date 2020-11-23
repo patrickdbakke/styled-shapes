@@ -2,7 +2,7 @@ name: Build and Deploy
 on: 
   workflow_dispatch:
   push:
-    paths: ["stories/**", "src/**"]
+    paths: ["stories/**", "src/**", "package.json"]
     branches:
       - main
 jobs:
