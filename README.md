@@ -1,5 +1,8 @@
 # Styled-Shapes
 
+[![NPM](https://nodei.co/npm/styled-shapes.png)](https://npmjs.org/package/styled-shapes)
+
+
 [Styled-System](https://styled-system.com/) compatible shapes for use in your JSX
 
 ![demo](./demo.png)
