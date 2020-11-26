@@ -92,16 +92,18 @@ export const Shape: React.FC<ShapeProps> = ({
     let maxX = -Infinity;
     let minY = Infinity;
     let maxY = -Infinity;
-    unscaledPath.iterate((_segment, _i, x, y) => {
-        minX = Math.min(minX, x);
-        maxX = Math.max(maxX, x);
-        minY = Math.min(minY, y);
-        maxY = Math.max(maxY, y);
+    unscaledPath.iterate((_segment: unknown, i: number, x: number, y: number) => {
+        if (i > 0) {
+            minX = Math.min(minX, x);
+            maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y);
+            maxY = Math.max(maxY, y);
+        }
     });
     const spanX = maxX - minX;
     const spanY = maxY - minY;
     const maxDist = Math.max(spanX, spanY);
-    const svgPath = unscaledPath.scale(1 / maxDist);
+    const svgPath = unscaledPath.translate(-minX, -minY).scale(1 / maxDist);
     let width = w;
     let height = h;
     if (typeof width === 'undefined' && typeof height === 'undefined') {

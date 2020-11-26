@@ -1,6 +1,6 @@
 {
   "name": "styled-shapes",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "html shapes implemented with styled-system props",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
