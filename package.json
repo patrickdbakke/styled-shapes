@@ -1,13 +1,15 @@
 {
   "name": "styled-shapes",
-  "version": "0.0.5",
+  "version": "0.1.2",
   "description": "html shapes implemented with styled-system props",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "browser": "dist/index.js",
-  "files": ["dist/"],
+  "files": [
+    "dist/"
+  ],
   "scripts": {
-    "test": "npm run test",
+    "test": "jest",
     "build": "rollup --config",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
@@ -56,6 +58,7 @@
     "@rollup/plugin-typescript": "^6.1.0",
     "@storybook/cli": "^6.1.0",
     "@storybook/react": "^6.1.2",
+    "@testing-library/react": "^11.2.2",
     "@types/jest": "^26.0.15",
     "@types/md5": "^2.2.1",
     "@types/node": "^14.14.2",

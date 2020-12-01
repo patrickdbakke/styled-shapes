@@ -1,5 +1,5 @@
 import Box from '@chakra-ui/core/dist/Box';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import svgpath from 'svgpath';
 import { splitSpaces } from './split';
 import { useRef } from './use-ref';
@@ -162,7 +162,7 @@ export const SVGBorder: React.FC<SVGBorderProps> = ({
             }
         }
         // eslint-disable-next-line @typescript-eslint/no-shadow
-        const paths: ReactNode[] = sides
+        const paths: React.ReactNode[] = sides
             .map((side) => {
                 const name = `border${side.name}` as keyof typeof b;
                 const sideBorder = parse(b[name] || border || '');
@@ -180,7 +180,7 @@ export const SVGBorder: React.FC<SVGBorderProps> = ({
                         key={name}
                         d={side.paths.join(' ')}
                         stroke={color}
-                        fill={color}
+                        fill="transparent"
                         strokeWidth={`${width}px`}
                     />
                 );
@@ -200,10 +200,22 @@ export const SVGBorder: React.FC<SVGBorderProps> = ({
             left="50%"
             transform="translateX(-50%) translateY(-50%)"
             zIndex={3}
+            width="100%"
+            height="100%"
             {...props}
         >
             {paths.length > 0 && (
-                <svg height="100%" width="100%" viewBox="0 0 1 1">
+                <svg
+                    height="100%"
+                    width="100%"
+                    viewBox="0 0 1 1"
+                    fill="transparent"
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                    }}
+                >
                     {paths}
                 </svg>
             )}

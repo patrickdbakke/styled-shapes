@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Shape, ShapeProps } from '../src/shape';
 import * as predefinedShapes from '../src/predefined-shapes';
 

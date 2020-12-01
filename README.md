@@ -39,7 +39,6 @@ When `width` & `height` are not specified, `<Shape/>` will fit to fill a unit sq
 
 # Todo
 
-- Unit tests
 - Resize observer
 - Animations / Transitions
 - Border Style
@@ -48,7 +47,6 @@ When `width` & `height` are not specified, `<Shape/>` will fit to fill a unit sq
 # Bugs
 
 - Some path elements (bezier curves, arcs), leave artifacts.
-- At a large font size, artifacts between svg strokes appear. Checkout the [stroke-position](https://www.w3.org/Graphics/SVG/WG/wiki/Proposals/Stroke_position) proposal.
 
 # License
 

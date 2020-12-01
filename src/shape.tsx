@@ -13,25 +13,25 @@ const defs = document.createElementNS(ns, 'defs');
 svgRoot.appendChild(defs);
 document.body.appendChild(svgRoot);
 
-export type ShapeProps = FlexProps &
-    React.DOMAttributes<HTMLDivElement> & {
-        path: string;
-        border?: string;
-        borderLeft?: string;
-        borderRight?: string;
-        borderTop?: string;
-        borderBottom?: string;
-        boxShadow?: string;
-        key?: string | number;
-        style?: {
-            [key: string]: unknown;
-        };
-        shapeProps?: {
-            width?: string;
-            height?: string;
-            style?: ShapeProps['style'];
-        };
+export type ShapeProps = {
+    path: string;
+    border?: string;
+    borderLeft?: string;
+    borderRight?: string;
+    borderTop?: string;
+    borderBottom?: string;
+    boxShadow?: string;
+    key?: string | number;
+    style?: {
+        [key: string]: unknown;
     };
+    shapeProps?: {
+        width?: string;
+        height?: string;
+        style?: ShapeProps['style'];
+    };
+} & FlexProps &
+    React.DOMAttributes<HTMLDivElement>;
 
 type ContentSize = {
     width?: string;
@@ -72,12 +72,12 @@ export const Shape: React.FC<ShapeProps> = ({
     marginRight = margin,
     marginBottom = margin,
     marginLeft = margin,
-    overflow = 'visible',
+    overflow = 'hidden',
     display,
     flexDirection,
     flex,
     flexBasis,
-    shapeProps,
+    shapeProps: shapeprops,
     ...props
 }: ShapeProps) => {
     const pathId = `path-${md5(path)}`;
@@ -92,53 +92,71 @@ export const Shape: React.FC<ShapeProps> = ({
     let maxX = -Infinity;
     let minY = Infinity;
     let maxY = -Infinity;
-    unscaledPath.iterate((_segment: unknown, i: number, x: number, y: number) => {
-        if (i > 0) {
-            minX = Math.min(minX, x);
-            maxX = Math.max(maxX, x);
-            minY = Math.min(minY, y);
-            maxY = Math.max(maxY, y);
-        }
-    });
+    unscaledPath.iterate(
+        (_segment: unknown, i: number, x: number, y: number) => {
+            if (i > 0) {
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x);
+                minY = Math.min(minY, y);
+                maxY = Math.max(maxY, y);
+            }
+        },
+    );
     const spanX = maxX - minX;
     const spanY = maxY - minY;
     const maxDist = Math.max(spanX, spanY);
-    const svgPath = unscaledPath.translate(-minX, -minY).scale(1 / maxDist);
+    let diffX: number = 0;
+    let diffY: number = 0;
+    if (spanX < maxDist) {
+        diffX = -minX + (maxDist - spanX) / 2;
+    } else {
+        diffX = -minX;
+    }
+    if (spanY < maxDist) {
+        diffY = -minY + (maxDist - spanY) / 2;
+    } else {
+        diffY = -minY;
+    }
+    const svgPath = unscaledPath
+        .translate(diffX, diffY)
+        .scale(1 / maxDist, 1 / maxDist);
     let width = w;
     let height = h;
     if (typeof width === 'undefined' && typeof height === 'undefined') {
-        width = '1em';
         height = '1em';
+        width = `${(1 * spanX) / spanY}em`;
     } else if (typeof width !== 'undefined' && typeof height === 'undefined') {
         height = `calc(${width} * ${spanY / spanX})`;
     } else if (typeof height !== 'undefined' && typeof width === 'undefined') {
         width = `calc(${height} * ${spanX / spanY})`;
     }
+
+    const ref = useRef<HTMLElement>(null);
     const [contentSize, setContentSize] = React.useState<ContentSize>({
         width,
         height,
     } as ContentSize);
-    const ref = useRef<HTMLElement>(null);
     React.useEffect(() => {
         if (ref.current) {
             const style = window.getComputedStyle(ref.current);
             const currentWidth = parseFloat(style.width);
             const currentHeight = parseFloat(style.height);
-            if (currentWidth / currentHeight > spanX / spanY) {
-                const newWidth = (currentHeight * spanX) / spanY;
+            if (spanX < spanY) {
+                const newSize = (currentHeight * spanX) / spanY;
                 setContentSize({
-                    height: contentSize.height,
-                    width: `${newWidth}px`,
+                    width: `${newSize}px`,
+                    height: `${newSize}px`,
                 });
-            } else if (currentWidth / currentHeight < spanX / spanY) {
-                const newHeight = (currentWidth * spanY) / spanX;
+            } else if (spanX > spanY) {
+                const newSize = (currentWidth * spanY) / spanX;
                 setContentSize({
-                    height: `${newHeight}px`,
-                    width: contentSize.width,
+                    height: `${newSize}px`,
+                    width: `${newSize}px`,
                 });
             }
         }
     }, [ref, ref.current]);
+
     const bg = {
         background,
         backgroundImage,
@@ -169,6 +187,7 @@ export const Shape: React.FC<ShapeProps> = ({
         marginBottom,
         marginLeft,
     };
+
     const parentProps = {
         position: 'relative' as 'relative',
         display: 'inline-block',
@@ -198,14 +217,19 @@ export const Shape: React.FC<ShapeProps> = ({
             clipPath: overflow !== 'visible' ? `url(#${pathId})` : undefined,
         },
     };
-    const shapeprops = {
+    const shapeProps = {
+        position: 'absolute' as 'absolute',
+        transformOrigin: '50% 50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+        top: '50%',
+        left: '50%',
+        height: '100%',
+        width: '100%',
         zIndex: 2,
         ...bg,
-        ...shapeProps,
-        transform: `translateX(-50%) translateY(-50%)`,
+        ...shapeprops,
         style: {
-            ...contentSize,
-            ...(shapeProps?.style || {}),
+            ...(shapeprops?.style || {}),
             clipPath: `url(#${pathId})`,
         },
     };
@@ -219,6 +243,16 @@ export const Shape: React.FC<ShapeProps> = ({
         flexDirection,
         flex,
         flexBasis,
+    };
+    const borderProps = {
+        position: 'absolute' as 'absolute',
+        transformOrigin: '50% 50%',
+        transform: 'translateX(-50%) translateY(-50%)',
+        top: '50%',
+        left: '50%',
+        path: svgPath,
+        ...b,
+        ...contentSize,
     };
 
     if (document.querySelectorAll(`#${pathId}`).length < 1) {
@@ -237,20 +271,10 @@ export const Shape: React.FC<ShapeProps> = ({
                 <Flex {...wrapperProps}>
                     <Flex {...contentProps}>{children}</Flex>
                 </Flex>
-                {contentSize.width && contentSize.height && (
-                    <>
-                        <WithShadowFilters shadow={boxShadow} {...contentSize}>
-                            <Flex
-                                position="absolute"
-                                transformOrigin="50% 50%"
-                                top="50%"
-                                left="50%"
-                                {...shapeprops}
-                            />
-                        </WithShadowFilters>
-                        <SVGBorder path={svgPath} {...b} {...contentSize} />
-                    </>
-                )}
+                <WithShadowFilters shadow={boxShadow} {...contentSize}>
+                    <Flex {...shapeProps} />
+                </WithShadowFilters>
+                <SVGBorder {...borderProps} />
             </Flex>
         </Flex>
     );

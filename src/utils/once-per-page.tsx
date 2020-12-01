@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactDOMServer from 'react-dom/server';
+import { render } from 'react-dom';
+import { renderToString } from 'react-dom/server';
 import md5 from 'md5';
 
 type OncePerPageProps = {
@@ -15,13 +15,13 @@ export const addToPageOnce = (
     if (!content) {
         return;
     }
-    const id = `once-${md5(ReactDOMServer.renderToString(content))}`;
+    const id = `once-${md5(renderToString(content))}`;
     const shouldAdd = document.querySelectorAll(`#${id}`).length < 1;
     if (shouldAdd) {
         const div = document.createElement('div');
         div.setAttribute('id', id);
         root.appendChild(div);
-        ReactDOM.render(content, div);
+        render(content, div);
     }
 };
 export const OncePerPage: React.FC<OncePerPageProps> = ({
