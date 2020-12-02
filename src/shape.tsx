@@ -2,16 +2,10 @@ import Flex, { FlexProps } from '@chakra-ui/core/dist/Flex';
 import md5 from 'md5';
 import React from 'react';
 import svgpath from 'svgpath';
-import { SVGBorder } from './utils/border';
-import { WithShadowFilters } from './utils/shadow';
-import { useRef } from './utils/use-ref';
-
-const ns = 'http://www.w3.org/2000/svg';
-const svgRoot = document.createElementNS(ns, 'svg');
-svgRoot.setAttribute('id', 'shapes-path-root');
-const defs = document.createElementNS(ns, 'defs');
-svgRoot.appendChild(defs);
-document.body.appendChild(svgRoot);
+import { SVGBorder } from './components/border';
+import { OncePerPage } from './components/once-per-page';
+import { SVGShadow } from './components/shadow';
+import { useRef } from './hooks/use-ref';
 
 export type ShapeProps = {
     path: string;
@@ -105,20 +99,11 @@ export const Shape: React.FC<ShapeProps> = ({
     const spanX = maxX - minX;
     const spanY = maxY - minY;
     const maxDist = Math.max(spanX, spanY);
-    let diffX: number = 0;
-    let diffY: number = 0;
-    if (spanX < maxDist) {
-        diffX = -minX + (maxDist - spanX) / 2;
-    } else {
-        diffX = -minX;
-    }
-    if (spanY < maxDist) {
-        diffY = -minY + (maxDist - spanY) / 2;
-    } else {
-        diffY = -minY;
-    }
+    const offsetX = -minX + (maxDist - spanX) / 2;
+    const offsetY = -minY + (maxDist - spanY) / 2;
+
     const svgPath = unscaledPath
-        .translate(diffX, diffY)
+        .translate(offsetX, offsetY)
         .scale(1 / maxDist, 1 / maxDist);
     let width = w;
     let height = h;
@@ -141,17 +126,16 @@ export const Shape: React.FC<ShapeProps> = ({
             const style = window.getComputedStyle(ref.current);
             const currentWidth = parseFloat(style.width);
             const currentHeight = parseFloat(style.height);
+            let newSize: number | null = null;
             if (spanX < spanY) {
-                const newSize = (currentHeight * spanX) / spanY;
-                setContentSize({
-                    width: `${newSize}px`,
-                    height: `${newSize}px`,
-                });
+                newSize = (currentHeight * spanX) / spanY;
             } else if (spanX > spanY) {
-                const newSize = (currentWidth * spanY) / spanX;
+                newSize = (currentWidth * spanY) / spanX;
+            }
+            if (newSize !== null) {
                 setContentSize({
-                    height: `${newSize}px`,
                     width: `${newSize}px`,
+                    height: `${newSize}px`,
                 });
             }
         }
@@ -255,25 +239,22 @@ export const Shape: React.FC<ShapeProps> = ({
         ...contentSize,
     };
 
-    if (document.querySelectorAll(`#${pathId}`).length < 1) {
-        const clipPath = document.createElementNS(ns, 'clipPath');
-        clipPath.setAttribute('id', pathId);
-        clipPath.setAttribute('clipPathUnits', 'objectBoundingBox');
-        const pathElement = document.createElementNS(ns, 'path');
-        pathElement.setAttribute('d', svgPath.toString());
-        clipPath.appendChild(pathElement);
-        defs.appendChild(clipPath);
-    }
-
     return (
         <Flex ref={ref} {...parentProps}>
+            <OncePerPage>
+                <svg>
+                    <clipPath id={pathId} clipPathUnits="objectBoundingBox">
+                        <path d={svgPath.toString()} />
+                    </clipPath>
+                </svg>
+            </OncePerPage>
             <Flex position="relative" margin="auto" height="100%" width="100%">
                 <Flex {...wrapperProps}>
                     <Flex {...contentProps}>{children}</Flex>
                 </Flex>
-                <WithShadowFilters shadow={boxShadow} {...contentSize}>
+                <SVGShadow shadow={boxShadow} {...contentSize}>
                     <Flex {...shapeProps} />
-                </WithShadowFilters>
+                </SVGShadow>
                 <SVGBorder {...borderProps} />
             </Flex>
         </Flex>

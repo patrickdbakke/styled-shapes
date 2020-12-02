@@ -3,11 +3,6 @@ import { render } from 'react-dom';
 import { renderToString } from 'react-dom/server';
 import md5 from 'md5';
 
-type OncePerPageProps = {
-    children: React.ReactElement | null;
-    root?: HTMLElement;
-};
-
 export const addToPageOnce = (
     content: React.ReactElement | null,
     root = document.body,
@@ -15,14 +10,18 @@ export const addToPageOnce = (
     if (!content) {
         return;
     }
+    // todo: there's probs a more performant way of checking uniqueness without a prop
     const id = `once-${md5(renderToString(content))}`;
-    const shouldAdd = document.querySelectorAll(`#${id}`).length < 1;
-    if (shouldAdd) {
+    if (document.querySelectorAll(`#${id}`).length < 1) {
         const div = document.createElement('div');
         div.setAttribute('id', id);
         root.appendChild(div);
         render(content, div);
     }
+};
+export type OncePerPageProps = {
+    children: React.ReactElement | null;
+    root?: HTMLElement;
 };
 export const OncePerPage: React.FC<OncePerPageProps> = ({
     root = document.body,

@@ -6,7 +6,7 @@ import { Shape } from './shape';
 
 const oneTick = () => new Promise((resolve) => setTimeout(resolve));
 describe('the svg path', () => {
-    describe('shape 1', () => {
+    describe('shape 1 (stop sign)', () => {
         beforeEach(async () => {
             render(
                 <Shape
@@ -33,7 +33,7 @@ describe('the svg path', () => {
             expect(document.body).toMatchSnapshot();
         });
     });
-    describe('shape 2', () => {
+    describe('shape 2 (hexagon)', () => {
         beforeEach(async () => {
             render(
                 <Shape

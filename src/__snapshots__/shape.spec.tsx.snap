@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`the svg path shape 1 should match the snapshot 1`] = `
+exports[`the svg path shape 1 (stop sign) should match the snapshot 1`] = `
 <body>
   <div
     class="Toaster"
@@ -31,20 +31,6 @@ exports[`the svg path shape 1 should match the snapshot 1`] = `
       style="max-width: 560px; position: fixed; z-index: 5500; pointer-events: none; bottom: 0px; right: 0px;"
     />
   </div>
-  <svg
-    id="shapes-path-root"
-  >
-    <defs>
-      <clippath
-        clipPathUnits="objectBoundingBox"
-        id="path-f032a833e240e62937ad9533bc337a97"
-      >
-        <path
-          d="M0.29289321881345254 0L0.7071067811865476 6.245004513516506e-17 1.0000000000000002 0.29289321881345254 1.0000000000000002 0.7071067811865477 0.7071067811865476 1.0000000000000002 0.2928932188134524 1.0000000000000002 0 0.7071067811865477 0 0.29289321881345254Z"
-        />
-      </clippath>
-    </defs>
-  </svg>
   <div>
     <div
       class="css-kqywxn"
@@ -114,6 +100,20 @@ exports[`the svg path shape 1 should match the snapshot 1`] = `
         </div>
       </div>
     </div>
+  </div>
+  <div
+    id="once-d4cdfd84b312b43f1b8054427089f6dc"
+  >
+    <svg>
+      <clippath
+        clipPathUnits="objectBoundingBox"
+        id="path-f032a833e240e62937ad9533bc337a97"
+      >
+        <path
+          d="M0.29289321881345254 0L0.7071067811865476 6.245004513516506e-17 1.0000000000000002 0.29289321881345254 1.0000000000000002 0.7071067811865477 0.7071067811865476 1.0000000000000002 0.2928932188134524 1.0000000000000002 0 0.7071067811865477 0 0.29289321881345254Z"
+        />
+      </clippath>
+    </svg>
   </div>
   <div
     id="once-fce492877a0be2c6885647e0089248d7"
@@ -221,7 +221,7 @@ exports[`the svg path shape 1 should match the snapshot 1`] = `
 </body>
 `;
 
-exports[`the svg path shape 2 should match the snapshot 1`] = `
+exports[`the svg path shape 2 (hexagon) should match the snapshot 1`] = `
 <body>
   <div
     class="Toaster"
@@ -252,10 +252,10 @@ exports[`the svg path shape 2 should match the snapshot 1`] = `
       style="max-width: 560px; position: fixed; z-index: 5500; pointer-events: none; bottom: 0px; right: 0px;"
     />
   </div>
-  <svg
-    id="shapes-path-root"
+  <div
+    id="once-d4cdfd84b312b43f1b8054427089f6dc"
   >
-    <defs>
+    <svg>
       <clippath
         clipPathUnits="objectBoundingBox"
         id="path-f032a833e240e62937ad9533bc337a97"
@@ -264,16 +264,8 @@ exports[`the svg path shape 2 should match the snapshot 1`] = `
           d="M0.29289321881345254 0L0.7071067811865476 6.245004513516506e-17 1.0000000000000002 0.29289321881345254 1.0000000000000002 0.7071067811865477 0.7071067811865476 1.0000000000000002 0.2928932188134524 1.0000000000000002 0 0.7071067811865477 0 0.29289321881345254Z"
         />
       </clippath>
-      <clippath
-        clipPathUnits="objectBoundingBox"
-        id="path-43f2fd1f4be4cb8199b37dd28e4589bb"
-      >
-        <path
-          d="M0.5 1L0.9330127018922193 0.75 0.9330127018922193 0.75 0.9330127018922193 0.25 0.5 0 0.0669872981077807 0.25 0.0669872981077807 0.75 0.5 1Z"
-        />
-      </clippath>
-    </defs>
-  </svg>
+    </svg>
+  </div>
   <div
     id="once-fce492877a0be2c6885647e0089248d7"
   >
@@ -439,6 +431,20 @@ exports[`the svg path shape 2 should match the snapshot 1`] = `
         </div>
       </div>
     </div>
+  </div>
+  <div
+    id="once-5dda08ac87d9f3a77446f01f32a62639"
+  >
+    <svg>
+      <clippath
+        clipPathUnits="objectBoundingBox"
+        id="path-43f2fd1f4be4cb8199b37dd28e4589bb"
+      >
+        <path
+          d="M0.5 1L0.9330127018922193 0.75 0.9330127018922193 0.75 0.9330127018922193 0.25 0.5 0 0.0669872981077807 0.25 0.0669872981077807 0.75 0.5 1Z"
+        />
+      </clippath>
+    </svg>
   </div>
   <div
     id="once-2dc643fc620a5d7bb8817d87a03d2608"
