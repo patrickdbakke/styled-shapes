@@ -24,7 +24,7 @@ const config = {
             include: ['src/**/*'],
         }),
     ],
-    external: ['react', 'react-dom', 'styled-system'],
+    external: ['react', 'react-dom', 'react-dom/server', 'styled-system'],
 };
 
 export default config;
