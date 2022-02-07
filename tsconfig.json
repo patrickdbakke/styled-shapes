@@ -15,7 +15,8 @@
         "outDir": "dist",
         "allowJs": true,
         "emitDeclarationOnly": false,
-        "rootDir": "./src/"
+        "rootDir": "./src/",
+        "importHelpers": true
     },
     "include": ["src"],
     "exclude": ["node_modules"],
