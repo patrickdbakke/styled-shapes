@@ -18,16 +18,16 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
 }: SVGShadowProps) => {
     const ref = useRef<HTMLElement>(null);
 
-    const filter = React.useMemo(() => {
-        return `url(#filter-${md5(shadowString || '')})`;
+    const md5Id = React.useMemo(() => {
+        return md5(shadowString || '');
     }, [shadowString]);
+    const filterId = `filter-${md5Id}`;
 
     const SVG = React.useMemo(() => {
         if (!ref.current || !shadowString) {
             return null;
         }
-        const id = `filter-${md5(shadowString || '')}`;
-        if (document.querySelectorAll(`#${id}`).length > 1) {
+        if (document.querySelectorAll(`#${filterId}`).length > 1) {
             return null;
         }
         const elem = document.createElement('div');
@@ -38,7 +38,7 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
             elem.style.left = str;
             return parseFloat(window.getComputedStyle(elem).left);
         };
-        const merge: React.ReactNode[] = [];
+        const mergeNodes: React.ReactNode[] = [];
         const filters = parseShadow(shadowString).map(
             (shadow: ShadowType, i) => {
                 const dx = parseUnits(shadow.xOffset);
@@ -51,7 +51,7 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
                     spread = -spread;
                 }
 
-                merge.unshift(
+                mergeNodes.unshift(
                     <feMergeNode key={shadow.string} in={`filter-${i}`} />,
                 );
                 if (shadow.type !== 'inset') {
@@ -106,7 +106,7 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
                         <feMorphology
                             operator={operator}
                             radius={spread}
-                            in={`filter-${i}`}
+                            in={`inverse-${i}`}
                             result={`dilated-${i}`}
                         />
                         <feOffset
@@ -124,12 +124,6 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
                             operator="in"
                             in2="SourceGraphic"
                             in={`blurred-${i}`}
-                            result={`shadow-${i}`}
-                        />
-                        <feComposite
-                            operator="atop"
-                            in2="SourceGraphic"
-                            in={`shadow-${i}`}
                             result={`filter-${i}`}
                         />
                     </React.Fragment>
@@ -148,8 +142,8 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
             >
                 <defs>
                     <filter
-                        id={id}
-                        key={id}
+                        id={filterId}
+                        key={filterId}
                         colorInterpolationFilters="sRGB"
                         x="-100%"
                         y="-100%"
@@ -157,7 +151,7 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
                         height="300%"
                     >
                         {filters}
-                        <feMerge>{merge}</feMerge>
+                        <feMerge>{mergeNodes}</feMerge>
                     </filter>
                 </defs>
             </svg>
@@ -167,7 +161,7 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
     return (
         <Box
             ref={ref}
-            style={{ filter: SVG ? filter : undefined }}
+            style={{ filter: SVG ? `url(#${filterId})` : undefined }}
             position="absolute"
             transform="translateX(-50%) translateY(-50%)"
             top="50%"
@@ -176,7 +170,7 @@ export const SVGShadow: React.FC<SVGShadowProps> = ({
             {...props}
         >
             {children}
-            <OncePerPage>{SVG}</OncePerPage>
+            {SVG && <OncePerPage id={filterId}>{SVG}</OncePerPage>}
         </Box>
     );
 };

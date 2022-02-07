@@ -1,17 +1,16 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { renderToString } from 'react-dom/server';
-import md5 from 'md5';
 
 export const addToPageOnce = (
+    ident: string,
     content: React.ReactElement | null,
     root = document.body,
 ) => {
     if (!content) {
         return;
     }
-    // todo: there's probs a more performant way of checking uniqueness without a prop
-    const id = `once-${md5(renderToString(content))}`;
+    console.log(ident)
+    const id = `once-${ident}`;
     if (document.querySelectorAll(`#${id}`).length < 1) {
         const div = document.createElement('div');
         div.setAttribute('id', id);
@@ -20,17 +19,19 @@ export const addToPageOnce = (
     }
 };
 export type OncePerPageProps = {
+    id: string,
     children: React.ReactElement | null;
     root?: HTMLElement;
 };
 export const OncePerPage: React.FC<OncePerPageProps> = ({
+    id,
     root = document.body,
     children,
 }: OncePerPageProps) => {
     React.useEffect(() => {
         setTimeout(() => {
-            addToPageOnce(children, root);
+            addToPageOnce(id, children, root);
         });
-    });
+    }, []);
     return null;
 };

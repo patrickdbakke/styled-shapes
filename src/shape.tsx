@@ -241,7 +241,7 @@ export const Shape: React.FC<ShapeProps> = ({
 
     return (
         <Flex ref={ref} {...parentProps}>
-            <OncePerPage>
+            <OncePerPage id={pathId}>
                 <svg>
                     <clipPath id={pathId} clipPathUnits="objectBoundingBox">
                         <path d={svgPath.toString()} />

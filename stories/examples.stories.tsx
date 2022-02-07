@@ -35,7 +35,7 @@ export const MoreExamples = () => {
                 path="M1 0.34641016151377546L0.8 0.6928203230275509 0.8 0.6928203230275509 0.4 0.6928203230275509 0 0.6928203230275509 0.2 0.34641016151377546 0.4 0 0.6000000000000001 0.34641016151377546 0.8 0 1 0.34641016151377546Z"
                 background="#eee"
                 border="1px solid black"
-                boxShadow="0 0 3px 3px rgba(0,0,0,.5)"
+                boxShadow="inset .05em .05em .125em 3px rgba(255,0,0,.5), inset -.05em -.05em .125em 3px rgba(0,0,255,.5), 0 0 3px 3px rgba(0,0,0,.5)"
                 margin=".5em"
             />
             <Shape
